@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--
+  orders.html — صفحة الطلبات والمدفوعات
+  هيكل المحتوى (نفس صفحة الدورات):
+  .page-title-row   العنوان + زرين
+  .notice-banner    ملاحظة
+  .insights-strip   أرقام (الـ JS بيعبّيها)
+  .filter-bar       بحث + فلتر الحالة + إعادة تعيين
+  .table-panel      الجدول (الـ JS بيعبّي الصفوف) + الترقيم
+  ما في CSS خاص: كل شي من components.css
+-->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#06677d" />
+  <title>الطلبات والمدفوعات · Micro Learn Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- الملفات المشتركة بس: ما في ملف CSS خاص بهاي الصفحة -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/theme-dark.css" />
+
+  <!-- بيطبّق الوضع الداكن قبل ما تنرسم الصفحة، عشان ما تومض أبيض.
+       لازم يكون بالـ <head> ومش defer، فبيشتغل فوراً -->
+  <script>
+    try {
+      if (localStorage.getItem('eduplatform-theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch {}
+  </script>
+</head>
+<body>
+
+  <!-- الأيقونات: لازم أول شي بالـ body وبدون defer، عشان تكون جاهزة قبل المحتوى -->
+  <script src="js/icons.js"></script>
+
+  <!-- القائمة الجانبية والشريط العلوي: js/layout.js بيبنيهم ويضيفهم هون -->
+  <div class="main">
+
+    <!-- ===== محتوى الصفحة ===== -->
+    <main class="content">
+
+      <!-- ---------- العنوان + الأزرار ---------- -->
+      <div class="page-title-row">
+        <div>
+          <div class="breadcrumb">
+            <span>الرئيسية</span>
+            <svg class="i i-sm" aria-hidden="true"><use href="#chevron"></use></svg>
+            <span class="active">الطلبات والمدفوعات</span>
+          </div>
+          <h1 class="page-title">الطلبات والمدفوعات</h1>
+          <p class="page-sub">تتبع العمليات والحالات المالية</p>
+        </div>
+        <div class="actions">
+          <!-- data-add و data-export: list-page.js بيربطهم بالإضافة والتصدير -->
+          <button type="button" class="btn btn-primary" data-add>
+            <svg class="i i-sm" aria-hidden="true"><use href="#plus"></use></svg>
+            تسجيل طلب
+          </button>
+          <button type="button" class="btn btn-outline" data-export>
+            <svg class="i i-sm" aria-hidden="true"><use href="#download"></use></svg>
+            تصدير البيانات
+          </button>
+        </div>
+      </div>
+
+      <div class="notice-banner">
+        <svg class="i i-sm" aria-hidden="true"><use href="#help"></use></svg>
+        <span>بيانات تجريبية للتعلّم، ولا تُعد سجلات حقيقية. التعديلات بتنحفظ بمتصفحك فقط.</span>
+      </div>
+
+      <!-- ---------- شريط الأرقام (data-stat بيتعبّى من الـ JS) ---------- -->
+      <div class="insights-strip">
+        <div class="insight-pill">إجمالي السجلات <b data-stat="total">0</b></div>
+        <div class="insight-pill">عناصر بحاجة للمتابعة <b data-stat="pending">0</b></div>
+      </div>
+
+      <!-- ---------- شريط الفلاتر ---------- -->
+      <div class="paper filter-bar">
+        <label class="field-with-icon search-field">
+          <svg class="i i-sm" aria-hidden="true"><use href="#search"></use></svg>
+          <input id="list-search" type="search" placeholder="ابحث بالاسم أو العنوان..." aria-label="البحث في الجدول" />
+        </label>
+
+        <!-- value="all" = بدون فلترة. باقي القيم لازم تطابق قيم status بالبيانات -->
+        <select id="status-filter" class="filter-select" aria-label="تصفية حسب الحالة">
+          <option value="all">كل الحالات</option>
+          <option value="paid">مدفوع</option>
+          <option value="pending">بانتظار الدفع</option>
+          <option value="refunded">مسترد</option>
+        </select>
+
+        <button type="button" class="btn btn-outline btn-sm" id="reset-filters">
+          <svg class="i i-sm" aria-hidden="true"><use href="#refresh"></use></svg>
+          إعادة تعيين
+        </button>
+      </div>
+
+      <!-- ---------- كرت الجدول ---------- -->
+      <section class="paper table-panel">
+        <div class="table-header">
+          <div>
+            <h2 class="panel-title">المعاملات الأخيرة</h2>
+            <span class="counter-badge" id="list-counter">0 عنصر</span>
+          </div>
+          <div class="table-actions">
+            <button type="button" class="btn btn-outline btn-sm" data-export>
+              <svg class="i i-sm" aria-hidden="true"><use href="#download"></use></svg>
+              تصدير CSV
+            </button>
+            <button type="button" class="btn btn-primary btn-sm" data-add>
+              <svg class="i i-sm" aria-hidden="true"><use href="#plus"></use></svg>
+              إضافة جديد
+            </button>
+          </div>
+        </div>
+
+        <!-- الرأس ثابت هون، والصفوف بيرسمها list-page.js -->
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">رقم الطلب</th>
+                <th scope="col">الطالب</th>
+                <th scope="col">الخدمة / الدورة</th>
+                <th scope="col">المبلغ</th>
+                <th scope="col">التاريخ</th>
+                <th scope="col">الحالة</th>
+                <th scope="col">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="list-body"></tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <span class="panel-note" id="list-range"></span>
+          <div class="page-buttons" id="list-pagination"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="toast-stack" id="toast-root" aria-live="polite"></div>
+
+  <!--
+    الترتيب:
+    1) data.js (+ layout.js: القائمة والشريط العلوي)       البيانات
+    2) main.js       الدوال المساعدة + القائمة والشريط
+    3) list-page.js  محرّك صفحات القوائم
+    4) orders.js     إعدادات هاي الصفحة
+  -->
+  <script src="js/data.js" defer></script>
+  <script src="js/layout.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/list-page.js" defer></script>
+  <script src="js/pages/orders.js" defer></script>
+</body>
+</html>

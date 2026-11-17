@@ -1,0 +1,828 @@
+/* =========================================================
+   dashboard.css — تنسيقات صفحة لوحة التحكم (index.html) فقط
+
+   أقسام الصفحة من فوق لتحت:
+   1) البانر الترحيبي          .hero-panel
+   2) كروت الإحصائيات (4)      .grid4 / .stat-card
+   3) صف: الرسم البياني + الدائرة   .dashboard-columns
+   4) صف: أحدث الدورات + النشاطات   .dash-secondary
+   5) الوصول السريع            .quick-tools
+   ========================================================= */
+
+
+/* =========================================================
+   1) البانر الترحيبي
+   ========================================================= */
+
+/* flex + space-between: النص يمين والرسمة يسار */
+.hero-panel {
+  position: relative;          /* مرجع للدوائر الزخرفية (absolute) */
+  overflow: hidden;            /* بيقص الدوائر اللي بتطلع برّا */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 177px;
+  margin-bottom: 20px;
+  padding: 28px 33px;
+  border-radius: 23px;
+  background: linear-gradient(110deg, #075c70 0%, #083f50 75%);
+  color: #fff;
+}
+
+/* حلقة بيضا شفافة كبيرة فوق على اليسار */
+.hero-panel::before {
+  content: '';
+  position: absolute;
+  top: -130px;
+  left: -110px;
+  width: 310px;
+  height: 310px;
+  border: 54px solid rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
+}
+
+/* حلقة صفرا شفافة تحت */
+.hero-panel::after {
+  content: '';
+  position: absolute;
+  bottom: -130px;
+  left: 22%;
+  width: 180px;
+  height: 180px;
+  border: 24px solid rgba(255, 207, 36, 0.1);
+  border-radius: 50%;
+}
+
+/* z-index: 1 عشان النص يطلع فوق الدوائر */
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-copy .eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  color: #c5e7e8;
+}
+
+.hero-copy h2 {
+  max-width: 650px;
+  margin: 7px 0 5px;
+  font-size: 26px;
+  line-height: 1.6;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+
+/* <em> = جزء مميز من العنوان، بنلونه أصفر بدل الخط المائل */
+.hero-copy h2 em {
+  font-style: normal;
+  color: var(--sun);
+}
+
+.hero-copy p {
+  margin-bottom: 15px;
+  font-size: 11px;
+  color: #c9e2e5;
+}
+
+/* زر شفاف بحدود بيضا فوق الخلفية الغامقة */
+.hero-outline {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* --- الرسمة على اليسار (دائرة + مربع أصفر مايل + شارة) --- */
+.hero-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 220px;
+  height: 145px;
+}
+
+.hero-visual .outer {
+  display: grid;
+  place-items: center;
+  width: 143px;
+  height: 143px;
+  border: 18px solid rgba(255, 255, 255, 0.09);
+  border-radius: 50%;
+}
+
+.hero-visual .inner {
+  display: grid;
+  place-items: center;
+  width: 95px;
+  height: 95px;
+  border-radius: 29px;
+  background: var(--sun);
+  color: #083b4a;
+  transform: rotate(11deg);      /* المربع مايل */
+}
+
+.hero-visual .inner .i {
+  width: 43px;
+  height: 43px;
+  transform: rotate(-11deg);     /* والأيقونة جوّاه مستقيمة */
+}
+
+.hero-visual .float-badge {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 12px;
+  border-radius: 12px;
+  background: #fff;
+  color: #0d5669;
+  font-size: 10px;
+  font-weight: 900;
+  box-shadow: var(--shadow);
+}
+
+
+/* =========================================================
+   2) كروت الإحصائيات
+   grid بـ 4 أعمدة متساوية.
+   minmax(0, 1fr) بدل 1fr عشان العمود يقدر يصغر لو المحتوى طويل
+   ========================================================= */
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+/* الكرت: النص يمين والأيقونة يسار */
+.stat-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 9px;
+  min-height: 132px;
+  padding: 20px 18px 18px;
+}
+
+.stat-copy > small {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #77909a;
+}
+
+/* الرقم الكبير */
+.stat-value {
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1.8;
+  letter-spacing: -1px;
+  color: var(--brand-deep);
+}
+
+.stat-foot {
+  font-size: 10px;
+  color: #82959c;
+}
+
+/* مربع الأيقونة، وإله 4 ألوان */
+.stat-icon {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  border-radius: 14px;
+  background: #dff3f2;
+  color: var(--brand);
+}
+
+.stat-icon.gold   { background: #fff4ca; color: #bf8d00; }
+.stat-icon.purple { background: #eee9ff; color: #7760c8; }
+.stat-icon.pink   { background: #ffe7ed; color: #c45b75; }
+
+
+/* =========================================================
+   3 + 4) صفوف من عمودين
+   العمود الأول أعرض (1.8 جزء)، والثاني أقل شي 295px
+   ========================================================= */
+.dashboard-columns,
+.dash-secondary {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(295px, 1fr);
+  gap: 16px;
+  margin-top: 17px;
+}
+
+.dashboard-columns > *,
+.dash-secondary > * {
+  min-width: 0;
+}
+
+/* --- الرسم البياني --- */
+.chart-area {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 232px;
+  overflow: hidden;
+}
+
+/* الـ SVG بيتمدد على عرض الكرت (لأنه عنده viewBox) */
+.sales-chart {
+  display: block;
+  width: 100%;
+  height: 217px;
+}
+
+.performance-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.performance-bottom strong {
+  font-size: 19px;
+}
+
+/* --- الدائرة (Donut) ---
+   conic-gradient بيرسم ألوان بشكل دوراني زي ساعة:
+   من 0 لـ 52% تركواز، من 52 لـ 76% أصفر، وهكذا.
+   وبعدين بنحط دائرة بيضا بالنص (.donut-inner) فبتصير حلقة */
+.donut-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 25px;
+  padding: 10px 4px 17px;
+}
+
+.donut {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 153px;
+  height: 153px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--brand) 0 52%,
+    var(--sun) 52% 76%,
+    #a5d8d3 76% 90%,
+    #edf3f4 90% 100%
+  );
+}
+
+.donut-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 114px;
+  height: 114px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.donut-inner strong {
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.donut-inner small {
+  font-size: 10px;
+}
+
+/* شرح الألوان جنب الدائرة */
+.donut-labels {
+  flex: 1;
+  display: grid;
+  gap: 13px;
+}
+
+.donut-labels > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.donut-labels b {
+  color: var(--brand-deep);
+}
+
+/* النقطة الملونة قبل كل بند */
+.legend-marker {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-left: 6px;
+  border-radius: 50%;
+}
+
+/* --- جدول أحدث الدورات داخل الداشبورد --- */
+.dash-secondary .table-scroll {
+  overflow-x: auto;
+}
+
+/* --- قائمة آخر النشاطات --- */
+.activity-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid #f0f4f5;
+}
+
+.activity-row:last-child {
+  border-bottom: 0;
+}
+
+/* flex: 1 بيخلّي النص ياخد المساحة والوقت ينزاح لآخر السطر */
+.activity-row > div {
+  flex: 1;
+}
+
+.activity-icon {
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  border-radius: 11px;
+  background: #eff8f7;
+  color: var(--brand);
+}
+
+.activity-row strong {
+  display: block;
+  font-size: 11px;
+}
+
+.activity-row p {
+  margin: 1px 0;
+  font-size: 10px;
+  line-height: 1.8;
+  color: #869ca4;
+}
+
+.activity-row time {
+  font-size: 9px;
+  color: #a1b0b5;
+}
+
+
+/* =========================================================
+   5) الوصول السريع (5 مربعات)
+   ========================================================= */
+.quick-panel {
+  margin-top: 17px;
+}
+
+.quick-tools {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quick-tool {
+  display: flex;
+  flex-direction: column;     /* الأيقونة فوق والنص تحت */
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 96px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: #fcfefe;
+  color: #4f717b;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.quick-tool:hover {
+  border-color: #a7d4d1;
+  background: #f4fbf9;
+}
+
+.quick-tool .i {
+  width: 23px;
+  height: 23px;
+  color: var(--brand);
+}
+
+
+/* =========================================================
+   ↓↓↓ أقسام أضفناها من لوحة itutor24.com/admin الحقيقية ↓↓↓
+   (صفحة التسويق بتستعمل 7 و 9 كمان)
+   ========================================================= */
+
+/* =========================================================
+   6) أزرار الوصول السريع بالبانر (التعليقات، التذاكر...)
+   ========================================================= */
+.hero-quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+/* زر صغير شفاف فوق الخلفية الغامقة */
+.hero-quick .btn {
+  min-height: 32px;
+  padding: 5px 11px;
+  border-color: rgba(255, 255, 255, 0.22);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e3f3f4;
+  font-size: 11px;
+}
+
+.hero-quick .btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+
+/* =========================================================
+   7) صناديق تحت الرسم البياني (اليوم / الأسبوع / الشهر / السنة)
+   ========================================================= */
+.earnings {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.earning-box {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+}
+
+.earning-box small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.earning-box strong {
+  display: block;
+  margin: 2px 0;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--brand-deep);
+}
+
+/* نسبة التغيّر: أخضر للزيادة، أحمر للنقص، رمادي إذا ما في مقارنة */
+.change {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.change.up   { color: var(--success); }
+.change.down { color: var(--danger); }
+
+
+/* =========================================================
+   8) كروت الملخص الثلاثة (مبيعات اليوم / إجمالي الدخل / إجمالي المبيعات)
+   رأس (أيقونة + عنوان) ← أسطر (اسم + رقم) ← المجموع الكبير تحت
+   ========================================================= */
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* سطر: الاسم يمين والرقم يسار، وخط منقط بينهم */
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 11px;
+}
+
+.summary-line span {
+  color: var(--muted);
+}
+
+/* margin-top: auto بيدفع المجموع لتحت الكرت دايماً،
+   حتى لو الكروت مش نفس الطول */
+.summary-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.summary-total small {
+  font-weight: 700;
+}
+
+.summary-total strong {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--brand-deep);
+}
+
+
+/* =========================================================
+   9) صفوف بعمودين متساويين (قوائم أو جداول)
+   ========================================================= */
+.tables-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 17px;
+}
+
+.tables-row > * {
+  min-width: 0;
+}
+
+/* scroll-margin: لما نروح للقسم برابط (#latest-comments)،
+   بيترك مسافة عشان الشريط العلوي اللازق ما يغطّي العنوان */
+[id^='latest-'] {
+  scroll-margin-top: 95px;
+}
+
+
+/* =========================================================
+   10) القوائم (آخر التعليقات، التذاكر، الفصول)
+   كل عنصر: أيقونة أو صورة | نص (عنوان + سطر صغير) | شارة
+   ========================================================= */
+.feed {
+  display: grid;
+}
+
+.feed-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 11px 0;
+  border-bottom: 1px solid #f0f4f5;
+}
+
+.feed-item:last-child {
+  border-bottom: 0;
+}
+
+/* min-width: 0 عشان النص الطويل يقدر ينقص بدل ما يوسّع الكرت */
+.feed-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.feed-body strong {
+  display: block;
+  font-size: 11.5px;
+}
+
+.feed-body small {
+  font-size: 10px;
+}
+
+/* نص التعليق: سطرين بالكثير وبعدين "..." */
+.feed-body p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 3px 0 0;
+  font-size: 11px;
+  line-height: 1.8;
+  color: #6f8893;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.feed-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 33px;
+  height: 33px;
+  border-radius: 11px;
+  background: #eff8f7;
+  color: var(--brand);
+}
+
+.dark-mode .feed-item {
+  border-bottom-color: #2a454f;
+}
+
+/* صف القوائم الثلاث ورسم المستخدمين: مسافة فوقهم */
+.lists-row,
+.full-panel {
+  margin-top: 17px;
+}
+
+.lists-row {
+  margin-bottom: 0;
+}
+
+/* القائمة بتاخد المساحة، و"عرض الكل" بينزل لآخر الكرت */
+.lists-row .panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.lists-row .feed {
+  flex: 1;
+}
+
+/* تحت 1010px: الكروت الثلاثة فوق بعض */
+@media (max-width: 1010px) {
+  .grid3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tables-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 750px) {
+  .earnings {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   التجاوب
+   ========================================================= */
+
+/* لابتوب صغير: كل شي أصغر شوي */
+@media (max-width: 1280px) {
+  .dashboard-columns,
+  .dash-secondary {
+    grid-template-columns: minmax(0, 1.6fr) minmax(270px, 1fr);
+  }
+
+  .grid4 {
+    gap: 10px;
+  }
+
+  .stat-card {
+    min-height: 120px;
+    padding: 15px;
+  }
+
+  .stat-value {
+    font-size: 21px;
+  }
+
+  .donut-wrap {
+    gap: 8px;
+  }
+
+  .donut {
+    width: 123px;
+    height: 123px;
+  }
+
+  .donut-inner {
+    width: 91px;
+    height: 91px;
+  }
+}
+
+@media (max-width: 1010px) {
+  .dashboard-columns,
+  .dash-secondary {
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 0.86fr);
+  }
+}
+
+/* موبايل: كل صف بيصير عمود واحد، والإحصائيات 2×2 */
+@media (max-width: 750px) {
+  .hero-panel {
+    min-height: 170px;
+    padding: 23px;
+  }
+
+  .hero-copy h2 {
+    font-size: 21px;
+  }
+
+  .hero-copy .btn {
+    font-size: 10px;
+  }
+
+  .hero-visual {
+    width: 100px;
+    opacity: 0.5;
+  }
+
+  .hero-visual .outer {
+    width: 90px;
+    height: 90px;
+    border-width: 9px;
+  }
+
+  .hero-visual .inner {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+  }
+
+  .hero-visual .float-badge {
+    display: none;
+  }
+
+  .grid4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat-card {
+    min-height: 116px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-icon {
+    width: 37px;
+    height: 37px;
+  }
+
+  .stat-foot {
+    line-height: 1.6;
+  }
+
+  .dashboard-columns,
+  .dash-secondary {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .chart-area {
+    justify-content: flex-start;
+    height: 210px;
+  }
+
+  .dash-secondary .data-table {
+    min-width: 480px;
+  }
+
+  .quick-tools {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-visual {
+    display: none;
+  }
+
+  .hero-copy h2 {
+    font-size: 20px;
+  }
+
+  .stat-copy > small {
+    font-size: 9.5px;
+  }
+
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .stat-value {
+    font-size: 19px;
+  }
+
+  .quick-tools {
+    gap: 6px;
+  }
+
+  .quick-tool {
+    min-height: 86px;
+  }
+
+  .donut-wrap {
+    flex-wrap: wrap;
+  }
+}

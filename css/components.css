@@ -1,0 +1,1074 @@
+/* =========================================================
+   components.css — مكونات بتتكرر بأكثر من صفحة
+   (أزرار، حقول، كروت، جداول، شارات، نوافذ...)
+
+   الفكرة: كل مكوّن إله class، وأي صفحة بدها المكوّن
+   بتحط الـ class بالـ HTML وخلص، بدون ما نعيد كتابة CSS.
+   كل ما نبني صفحة جديدة وفيها مكوّن مشترك، بنضيفه هون.
+
+   الفهرس:
+   1)  الأزرار            .btn
+   2)  أزرار الأيقونات     .icon-btn
+   3)  حقول النماذج        .form-field / .form-control
+   4)  عنوان صغير          .section-kicker
+   5)  الكروت              .paper / .panel
+   6)  الصورة الرمزية      .avatar
+   7)  الشارات             .status / .pill / .preview-pill
+   8)  روابط وملاحظات      .text-link / .notice-banner
+   9)  أزرار مجمّعة         .segmented
+   10) الجداول             .data-table
+   11) الإشعار السفلي      .toast
+   12) النافذة المنبثقة    .modal
+   13) صفحات القوائم       .filter-bar / .table-panel / .pagination
+   14) محتوى النوافذ       .form-row / .details-row / .danger-note
+   15) صفحات الإعدادات     .settings-main / .settings-row / .toggle
+   ========================================================= */
+
+
+/* =========================================================
+   1) الأزرار
+   الاستخدام: <button class="btn btn-primary">نص</button>
+   .btn = الشكل الأساسي، و btn-primary/btn-outline... = اللون
+   ========================================================= */
+.btn {
+  display: inline-flex;       /* عشان الأيقونة والنص يصفّوا جنب بعض */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;                   /* مسافة بين الأيقونة والنص */
+  min-height: 39px;
+  padding: 7px 15px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: var(--paper);
+  color: var(--brand-deep);
+  font-weight: 800;
+  white-space: nowrap;        /* النص ما ينزل لسطر ثاني */
+  transition: 0.17s;          /* حركة ناعمة عند الـ hover */
+}
+
+/* لما الماوس يمر: الزر بيطلع لفوق 1px */
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.985);
+}
+
+/* إطار أصفر لما نوصل للزر بالكيبورد (Tab) — مهم لإمكانية الوصول */
+.btn:focus-visible,
+.icon-btn:focus-visible {
+  outline: 3px solid #ffca48;
+  outline-offset: 2px;
+}
+
+/* --- ألوان الأزرار (modifiers) --- */
+.btn-primary {                                  /* تركواز: الإجراء الأساسي */
+  background: var(--brand);
+  color: #fff;
+  box-shadow: 0 6px 15px rgba(6, 113, 136, 0.16);
+}
+.btn-dark    { background: var(--brand-deep); color: #fff; }        /* كحلي */
+.btn-sun     { background: var(--sun); color: var(--brand-deep); }  /* أصفر */
+.btn-outline { background: var(--paper); border-color: var(--line); } /* أبيض بحدود */
+.btn-soft    { background: #eef7f6; color: var(--brand); }          /* فاتح */
+.btn-danger  { background: #fae6e9; color: #bf4658; }               /* حذف */
+
+/* --- أحجام --- */
+.btn-sm {
+  min-height: 32px;
+  padding: 5px 10px;
+  border-radius: 9px;
+  font-size: 11px;
+}
+.btn-full { width: 100%; }
+
+
+/* =========================================================
+   2) زر الأيقونة (مربع صغير فيه أيقونة بس)
+   الاستخدام: <button class="icon-btn">...svg...</button>
+   ========================================================= */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 39px;
+  height: 39px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--paper);
+  color: #466879;
+  transition: 0.15s;
+}
+
+.icon-btn:hover {
+  background: #eaf5f5;
+  color: var(--brand);
+}
+
+/* نسخة بدون حدود ولا خلفية (زي زر العين بحقل كلمة المرور) */
+.icon-btn.flat {
+  border-color: transparent;
+  background: transparent;
+}
+
+/* زر عليه نقطة تنبيه صفرا (زر الإشعارات) */
+.icon-btn.has-dot {
+  position: relative;          /* عشان النقطة تتموضع نسبةً للزر */
+}
+
+.icon-btn.has-dot::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  background: #efb52c;
+}
+
+
+/* =========================================================
+   3) حقول النماذج
+   الاستخدام:
+   <label class="form-field">
+     اسم الحقل
+     <input class="form-control" />
+   </label>
+   ========================================================= */
+.form-field {
+  display: flex;
+  flex-direction: column;     /* العنوان فوق والحقل تحت */
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #466674;
+}
+
+.form-control {
+  width: 100%;
+  min-height: 43px;
+  padding: 10px 12px;
+  border: 1px solid #dde9ec;
+  border-radius: 11px;
+  background: #fff;
+  color: #274652;
+  font-size: 12px;
+}
+
+/* لما نكتب جوّا الحقل: حدود ملونة + هالة خفيفة */
+.form-control:focus {
+  border-color: #43a1a8;
+  box-shadow: 0 0 0 3px rgba(42, 155, 163, 0.11);
+}
+
+
+/* =========================================================
+   4) عنوان صغير بنقطة صفراء
+   ========================================================= */
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--brand);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+/* ::before بيضيف عنصر وهمي قبل النص: هون النقطة الصفراء */
+.section-kicker::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sun);
+}
+
+
+/* =========================================================
+   5) الكرت الأبيض
+   .paper = الشكل (خلفية بيضا + حدود + ظل + زوايا)
+   .panel = المسافة الداخلية
+   فصلناهم عشان نقدر نستخدم .paper لحاله (مثلاً جدول بدون padding)
+   الاستخدام: <section class="paper panel">...</section>
+   ========================================================= */
+.paper {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  box-shadow: var(--soft-shadow);
+}
+
+.panel {
+  padding: 23px;
+}
+
+/* رأس الكرت: العنوان يمين وزر/شارة يسار */
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 17px;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.8;
+  color: var(--brand-deep);
+}
+
+.panel-note {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.section-intro {
+  max-width: 670px;
+  font-size: 12px;
+  line-height: 1.9;
+  color: #879aa3;
+}
+
+/* خط فاصل رفيع */
+.soft-divider {
+  margin: 15px 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+
+/* =========================================================
+   6) الصورة الرمزية (أول حرفين من الاسم)
+   الاستخدام: <span class="avatar sm pink">نأ</span>
+   ========================================================= */
+.avatar {
+  position: relative;
+  display: inline-grid;
+  place-items: center;        /* بيوسّط الحروف أفقياً وعمودياً */
+  flex-shrink: 0;             /* ما تنضغط إذا المساحة ضيقة */
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+  background: #e3f1f0;
+  color: var(--brand);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+/* ألوان مختلفة عشان الأسماء ما تكون كلها نفس اللون */
+.avatar.yellow { background: #fff1bd; color: #a77310; }
+.avatar.pink   { background: #fce7eb; color: #b45a6a; }
+.avatar.blue   { background: #e1ebff; color: #426daf; }
+.avatar.lilac  { background: #eee9ff; color: #7762b2; }
+.avatar.green  { background: #dbf5e6; color: #37805d; }
+
+/* حجم صغير للجداول */
+.avatar.sm {
+  width: 31px;
+  height: 31px;
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   7) الشارات
+   ========================================================= */
+
+/* --- شارة الحالة (منشور / مسودة / ملغي...) ---
+   ::before بيرسم النقطة، و currentColor بياخد نفس لون النص */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 9px;
+  border-radius: 20px;
+  background: #e3f5ec;
+  color: #178366;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.status::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status.live     { background: #dff1fd; color: #267db2; }  /* منشور / نشط */
+.status.draft    { background: #f2f1f0; color: #84919a; }  /* مسودة */
+.status.pending  { background: #fff0d6; color: #ae7a16; }  /* بانتظار */
+.status.canceled { background: #fee9ed; color: #bf4a5e; }  /* ملغي */
+
+/* --- حبة صغيرة (تصنيف، ملاحظة) --- */
+.pill {
+  display: inline-flex;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #e9f5f4;
+  color: var(--brand);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.pill.yellow { background: #fff4d0; color: #a17b11; }
+.pill.purple { background: #f0eafd; color: #745bb2; }
+.pill.gray   { background: #f1f4f5; color: #708891; }
+
+/* --- "وضع المعاينة" بالشريط العلوي --- */
+.preview-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: #fff6d8;
+  color: #916e09;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.preview-pill .i {
+  width: 13px;
+  height: 13px;
+}
+
+
+/* =========================================================
+   8) روابط وملاحظات
+   ========================================================= */
+
+/* رابط نصي بسهم (عرض الكل ←) */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 4px;
+  color: var(--brand);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+/* شريط ملاحظة أخضر فاتح بعرض الصفحة */
+.notice-banner {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 17px;
+  padding: 11px 14px;
+  border: 1px solid #cbe7e5;
+  border-radius: 12px;
+  background: #eaf8f5;
+  color: #477b82;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+/* ملاحظة داخل كرت أو نافذة */
+.notice-inline {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 16px;
+  border: 1px solid #d5eceb;
+  border-radius: 12px;
+  background: #f1faf7;
+  color: #5c7f86;
+  font-size: 11px;
+  line-height: 2;
+}
+
+
+/* =========================================================
+   9) أزرار مجمّعة (أسبوع / شهر / سنة)
+   الـ JS بيحط class="selected" على الزر المختار
+   ========================================================= */
+.segmented {
+  display: flex;
+  gap: 3px;
+  padding: 4px;
+  border-radius: 10px;
+  background: #f1f6f6;
+}
+
+.segmented button {
+  padding: 7px 11px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #698691;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.segmented button.selected {
+  background: #fff;
+  color: #0a6e85;
+  box-shadow: 0 1px 4px rgba(16, 44, 53, 0.08);
+}
+
+
+/* =========================================================
+   10) الجداول
+   الهيكل:
+   <div class="table-scroll">
+     <table class="data-table">...</table>
+   </div>
+   ========================================================= */
+
+/* الغلاف بيعمل سكرول أفقي إذا الجدول أعرض من الشاشة */
+.table-scroll {
+  width: 100%;
+  overflow: auto;
+  border-radius: 0 0 14px 14px;
+}
+
+/* border-collapse: collapse = حدود الخلايا بتندمج بخط واحد */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.data-table thead tr {
+  background: #f5faf9;
+}
+
+.data-table th {
+  padding: 13px 15px 13px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  font-weight: 800;
+  color: #7b939c;
+}
+
+.data-table td {
+  padding: 13px 15px 13px 12px;
+  border-bottom: 1px solid #f0f4f5;
+  vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+  background: #fbfdfd;
+}
+
+/* آخر صف بدون خط تحته */
+.data-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* خلية فيها صورة رمزية + اسم + سطر صغير */
+.cell-person {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 155px;
+}
+
+.cell-person strong {
+  display: block;
+  font-size: 11px;
+  color: #213f4b;
+}
+
+.cell-person small {
+  display: block;
+  margin-top: 1px;
+  font-size: 10px;
+  color: #8ea1a9;
+}
+
+/* خلية عنوان طويل: بنسمحله ينزل لسطر ثاني */
+.cell-title {
+  min-width: 160px;
+  max-width: 250px;
+  font-weight: 800;
+  white-space: normal;
+}
+
+.cell-title small {
+  display: block;
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #9ba9ad;
+}
+
+
+/* =========================================================
+   11) الإشعار السفلي (Toast)
+   رسالة صغيرة بتطلع تحت على اليسار وبتختفي بعد ثواني
+   (الـ JS بيضيفها جوّا #toast-root)
+   ========================================================= */
+.toast-stack {
+  position: fixed;
+  bottom: 22px;
+  left: 26px;
+  z-index: 120;               /* فوق كل شي */
+  display: grid;
+  gap: 8px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--brand-deep);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.17);
+}
+
+.toast .i {
+  color: var(--sun);
+}
+
+
+/* =========================================================
+   12) النافذة المنبثقة (Modal)
+   بنستخدم عنصر <dialog> الجاهز في HTML (الـ JS بيبنيه):
+   - بيتوسّط بالشاشة لحاله
+   - زر Esc بيسكّره لحاله
+   - ::backdrop هي الخلفية المعتمة وراه
+   ========================================================= */
+.modal {
+  width: min(610px, 95vw);    /* 610px أو 95% من الشاشة، الأصغر */
+  max-height: 91vh;
+  padding: 0;
+  border: 0;
+  border-radius: 22px;
+  background: #fff;
+  color: var(--text);
+  box-shadow: 0 35px 100px rgba(0, 29, 40, 0.25);
+}
+
+.modal::backdrop {
+  background: rgba(3, 28, 37, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 21px 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.modal-body {
+  display: grid;
+  gap: 15px;
+  padding: 24px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 9px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--line);
+}
+
+
+/* =========================================================
+   13) صفحات القوائم (الدورات، الاختبارات، الطلاب...)
+   كل صفحة قائمة إلها نفس الهيكل:
+   شريط أرقام ← شريط فلاتر ← كرت الجدول (رأس + جدول + ترقيم)
+   ========================================================= */
+
+/* --- شريط الأرقام فوق الفلاتر --- */
+.insights-strip {
+  display: flex;
+  flex-wrap: wrap;           /* إذا ما وسعوا بسطر بينزلوا للي بعده */
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.insight-pill {
+  padding: 10px 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.insight-pill b {
+  margin: 0 5px;
+  color: var(--brand);
+}
+
+/* --- شريط الفلاتر (بحث + قوائم منسدلة + زر) --- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 17px;
+  padding: 17px 19px;
+}
+
+/* حقل فيه أيقونة جوّاه (زي البحث) */
+.field-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 41px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #fff;
+  color: #8a9eaa;
+}
+
+.field-with-icon input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;   /* بياخد لون الحقل الأب (مهم للوضع الداكن) */
+  color: var(--text);
+}
+
+/* حقل البحث بياخد كل المساحة الباقية بالسطر */
+.field-with-icon.search-field {
+  flex: 1;
+  min-width: 210px;
+}
+
+.filter-select {
+  min-width: 135px;
+  min-height: 41px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #fff;
+  color: #5f7984;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* --- كرت الجدول ---
+   padding: 0 لأن الجدول لازم يلزق على حواف الكرت */
+.table-panel {
+  overflow: hidden;
+  padding: 0;
+}
+
+/* الجدول ما يصغر أقل من 860px، وإذا الشاشة أضيق بيصير سكرول أفقي */
+.table-panel .data-table {
+  min-width: 860px;
+}
+
+.table-panel .cell-person {
+  min-width: 130px;
+}
+
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 21px 20px 16px;
+}
+
+.table-header > div:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* "7 عنصر" جنب عنوان الجدول */
+.counter-badge {
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: #e8f5f3;
+  color: #067184;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.table-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* أزرار عرض / تعديل / حذف بكل صف */
+.row-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.row-actions .icon-btn {
+  width: 29px;
+  height: 29px;
+  border-color: transparent;
+  border-radius: 9px;
+}
+
+.row-actions .icon-btn:hover {
+  background: #eff7f7;
+}
+
+/* لما ما في نتائج للبحث */
+.empty-state {
+  padding: 58px 15px;
+  text-align: center;
+  color: #8ca1a7;
+}
+
+.empty-state .i {
+  width: 34px;
+  height: 34px;
+  color: #b3cdcd;
+}
+
+.empty-state h3 {
+  margin-top: 13px;
+  color: #426672;
+}
+
+/* --- الترقيم (Pagination) أسفل الجدول --- */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--line);
+}
+
+.page-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.page-btn {
+  min-width: 31px;
+  height: 31px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: #557480;
+}
+
+/* الصفحة الحالية */
+.page-btn.current {
+  border-color: var(--brand);
+  background: var(--brand);
+  color: #fff;
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+}
+
+
+/* =========================================================
+   14) محتوى النوافذ: نماذج، تفاصيل، تأكيد حذف
+   ========================================================= */
+
+/* النموذج بعمودين */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+/* حقل بياخد عرض النموذج كامل (بيمتد على العمودين) */
+.form-wide {
+  grid-column: 1 / -1;
+}
+
+.form-help {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 500;
+  color: #8ca0a9;
+}
+
+/* سطر تفاصيل: الاسم يمين والقيمة يسار */
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 10px 2px;
+  border-bottom: 1px solid var(--line);
+}
+
+.details-row:last-child {
+  border: 0;
+}
+
+.details-row span {
+  color: #78919b;
+}
+
+.details-row b {
+  text-align: left;
+  overflow-wrap: anywhere;   /* النص الطويل بينكسر بدل ما يطلع برّا */
+}
+
+/* صندوق تحذير أحمر فاتح (تأكيد الحذف) */
+.danger-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #f5d6d7;
+  border-radius: 14px;
+  background: #fff3f3;
+  color: #8c4653;
+  line-height: 2;
+}
+
+.danger-note .i {
+  color: var(--danger);
+}
+
+/* تقييم بنجمة (صفحة المدرّبين) */
+.rating {
+  color: #d29b00;
+}
+
+/* --- أنواع خلايا إضافية (بيستعملها page-builder.js) --- */
+
+/* رقم ترتيب (#1998) */
+.rank {
+  font-weight: 800;
+  color: var(--muted);
+}
+
+/* كود (كود خصم، رابط) بخط ثابت العرض */
+.code-chip {
+  padding: 3px 8px;
+  border: 1px dashed var(--mint-strong);
+  border-radius: 7px;
+  background: #f1faf8;
+  color: var(--brand);
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  direction: ltr;
+}
+
+/* دائرة لون صغيرة */
+.color-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  outline: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+/* نص طويل (رسالة، تعليق): بنقصه بعد 260px مع "..." */
+.cell-long {
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.dark-mode .code-chip {
+  background: #163d44;
+}
+
+
+/* =========================================================
+   15) صفحات الإعدادات (مظهر الموقع + الإعدادات العامة)
+   ========================================================= */
+
+/* عمودين: المحتوى (مرن) + عمود جانبي عرضه 300px */
+.settings-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 16px;
+}
+
+.settings-main > * {
+  min-width: 0;
+}
+
+/* مسافة بين الكروت بنفس العمود */
+.stack {
+  display: grid;
+  gap: 16px;
+}
+
+/* حقول فوق بعض بمسافة */
+.form-stack {
+  display: grid;
+  gap: 13px;
+}
+
+/* حقل نص متعدد الأسطر */
+textarea.form-control {
+  min-height: 110px;
+  resize: vertical;          /* المستخدم بيقدر يكبّره لتحت بس */
+}
+
+.form-control:disabled {
+  background: #f5f8f9;
+  color: #8ca0a9;
+}
+
+/* سطر إعداد: النص يمين والمفتاح يسار */
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.settings-row:last-child {
+  border-bottom: 0;
+}
+
+.settings-row strong {
+  display: block;
+  font-size: 12px;
+}
+
+.settings-row p {
+  margin: 2px 0 0;
+  font-size: 10.5px;
+  line-height: 1.8;
+  color: #8299a2;
+}
+
+/* --- مفتاح تشغيل/إيقاف (Toggle) ---
+   زر عادي، والدائرة البيضا هي ::after
+   لما يصير عليه class="on" الدائرة بتتحرك والخلفية بتتلون */
+.toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 39px;
+  height: 23px;
+  border: none;
+  border-radius: 99px;
+  background: #cbd8dd;
+  transition: background 0.2s;
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(75, 104, 124, 0.2);
+  transition: left 0.2s;     /* حركة الدائرة */
+}
+
+.toggle.on {
+  background: var(--brand);
+}
+
+.toggle.on::after {
+  left: 20px;
+}
+
+.toggle:focus-visible {
+  outline: 3px solid #ffca48;
+  outline-offset: 2px;
+}
+
+/* تحت 1010px: العمود الجانبي بينزل تحت المحتوى */
+@media (max-width: 1010px) {
+  .settings-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   تعديلات الموبايل للمكونات
+   ========================================================= */
+@media (max-width: 750px) {
+  .panel {
+    padding: 17px;
+  }
+
+  /* الفلاتر: البحث بسطر لحاله، والقوائم بتتقاسم السطر الثاني */
+  .filter-bar {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .field-with-icon.search-field {
+    flex-basis: 100%;
+  }
+
+  .filter-select {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .table-header,
+  .pagination {
+    flex-wrap: wrap;
+    padding: 15px;
+  }
+
+  /* النموذج بعمود واحد */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .notice-banner {
+    align-items: flex-start;
+  }
+
+  .segmented {
+    gap: 0;
+  }
+
+  .segmented button {
+    padding: 5px 7px;
+  }
+
+  /* الإشعار بياخد عرض الشاشة كامل */
+  .toast-stack {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+  }
+
+  .toast {
+    justify-content: center;
+  }
+
+  .modal-header {
+    padding: 15px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+}

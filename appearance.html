@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--
+  appearance.html — صفحة مظهر الموقع
+  هيكل المحتوى:
+  .page-title-row   العنوان + زر الحفظ
+  .settings-main    عمودين:
+    ├── .stack      3 كروت: الألوان + النصوص + مفاتيح الأقسام
+    └── <aside>     معاينة فورية (موقع مصغّر)
+-->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#06677d" />
+  <title>مظهر الموقع · Micro Learn Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- الملفات المشتركة + ملف هاي الصفحة + الوضع الداكن (آخر واحد) -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/pages/appearance.css" />
+  <link rel="stylesheet" href="css/theme-dark.css" />
+
+  <!-- بيطبّق الوضع الداكن قبل ما تنرسم الصفحة، عشان ما تومض أبيض.
+       لازم يكون بالـ <head> ومش defer، فبيشتغل فوراً -->
+  <script>
+    try {
+      if (localStorage.getItem('eduplatform-theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch {}
+  </script>
+</head>
+<body>
+
+  <!-- الأيقونات: لازم أول شي بالـ body وبدون defer، عشان تكون جاهزة قبل المحتوى -->
+  <script src="js/icons.js"></script>
+
+  <!-- القائمة الجانبية والشريط العلوي: js/layout.js بيبنيهم ويضيفهم هون -->
+  <div class="main">
+
+    <!-- ===== محتوى الصفحة ===== -->
+    <main class="content">
+
+      <!-- ---------- العنوان + الأزرار ---------- -->
+      <div class="page-title-row">
+        <div>
+          <div class="breadcrumb">
+            <span>الرئيسية</span>
+            <svg class="i i-sm" aria-hidden="true"><use href="#chevron"></use></svg>
+            <span class="active">مظهر الموقع</span>
+          </div>
+          <h1 class="page-title">مظهر الموقع</h1>
+          <p class="page-sub">تخصيص الشكل العام وتفعيل أقسام الصفحة الرئيسية.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="save-appearance">
+            <svg class="i i-sm" aria-hidden="true"><use href="#check"></use></svg>
+            حفظ التغييرات
+          </button>
+        </div>
+      </div>
+
+      <!-- عمودين: الإعدادات (يمين) + المعاينة (يسار) -->
+      <div class="settings-main">
+
+        <!-- .stack = الكروت فوق بعض بمسافة 16px -->
+        <div class="stack">
+
+          <!-- ---------- الألوان ---------- -->
+          <section class="paper panel">
+            <div class="panel-head">
+              <h2 class="panel-title">الهوية البصرية</h2>
+              <span class="pill yellow">مستوحاة من الهوية الحالية</span>
+            </div>
+            <p class="section-intro">احتفظنا بدرجات الأزرق البحري والتُركواز والأصفر. اختر درجة اللون الأساسي للمعاينة.</p>
+            <!-- data-color: appearance.js بيقرأه لما ينضغط المربع -->
+            <div class="swatches">
+              <button type="button" class="swatch" data-color="#0b7186" style="background: #0b7186" aria-label="لون #0b7186"></button>
+              <button type="button" class="swatch" data-color="#066b80" style="background: #066b80" aria-label="لون #066b80"></button>
+              <button type="button" class="swatch" data-color="#137c89" style="background: #137c89" aria-label="لون #137c89"></button>
+              <button type="button" class="swatch" data-color="#08758d" style="background: #08758d" aria-label="لون #08758d"></button>
+              <button type="button" class="swatch" data-color="#104e62" style="background: #104e62" aria-label="لون #104e62"></button>
+              <button type="button" class="swatch" data-color="#319fa5" style="background: #319fa5" aria-label="لون #319fa5"></button>
+              <button type="button" class="swatch" data-color="#0a596c" style="background: #0a596c" aria-label="لون #0a596c"></button>
+              <button type="button" class="swatch" data-color="#136875" style="background: #136875" aria-label="لون #136875"></button>
+            </div>
+          </section>
+
+          <!-- ---------- النصوص ---------- -->
+          <section class="paper panel">
+            <div class="panel-head">
+              <h2 class="panel-title">نص الصفحة الرئيسية</h2>
+            </div>
+            <div class="form-stack">
+              <label class="form-field">
+                العنوان الرئيسي
+                <input class="form-control" id="hero-title" />
+              </label>
+              <label class="form-field">
+                الوصف التعريفي
+                <textarea class="form-control" id="hero-subtitle"></textarea>
+              </label>
+            </div>
+          </section>
+
+          <!-- ---------- مفاتيح الأقسام (data-key = اسم الخاصية بـ db.appearance) ---------- -->
+          <section class="paper panel">
+            <div class="panel-head">
+              <h2 class="panel-title">أقسام الموقع الرئيسية</h2>
+            </div>
+            <div>
+          <div class="settings-row">
+            <div>
+              <strong>قسم الترحيب</strong>
+              <p>إظهار عنوان التعريف والبحث عن الدورات</p>
+            </div>
+            <!-- role="switch" = قارئ الشاشة بيعرف إنه مفتاح تشغيل/إيقاف -->
+            <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="قسم الترحيب" data-key="hero"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <strong>التصنيفات</strong>
+              <p>عرض التخصصات والمجالات المتاحة</p>
+            </div>
+            <!-- role="switch" = قارئ الشاشة بيعرف إنه مفتاح تشغيل/إيقاف -->
+            <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="التصنيفات" data-key="categories"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <strong>أفضل المدرّبين</strong>
+              <p>التعريف بأعضاء هيئة التدريس</p>
+            </div>
+            <!-- role="switch" = قارئ الشاشة بيعرف إنه مفتاح تشغيل/إيقاف -->
+            <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="أفضل المدرّبين" data-key="tutors"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <strong>آراء الطلاب</strong>
+              <p>إظهار قصص وتجارب المتعلمين</p>
+            </div>
+            <!-- role="switch" = قارئ الشاشة بيعرف إنه مفتاح تشغيل/إيقاف -->
+            <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="آراء الطلاب" data-key="testimonials"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <strong>النشرة البريدية</strong>
+              <p>دعوة الزوار للاشتراك بآخر الأخبار</p>
+            </div>
+            <!-- role="switch" = قارئ الشاشة بيعرف إنه مفتاح تشغيل/إيقاف -->
+            <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="النشرة البريدية" data-key="newsletter"></button>
+          </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ---------- المعاينة الفورية: موقع مصغّر ---------- -->
+        <aside class="paper panel">
+          <div class="panel-head">
+            <h2 class="panel-title">معاينة فورية</h2>
+          </div>
+          <div class="preview-ui">
+            <div class="preview-header">
+              <svg class="i i-sm" aria-hidden="true"><use href="#book"></use></svg>
+              MICRO LEARN
+              <span>الرئيسية · الدورات</span>
+            </div>
+            <div class="preview-body">
+              <div class="preview-hero">
+                <!-- appearance.js بيكتب العنوان هون وانت بتكتب بالحقل -->
+                <strong id="preview-title"></strong>
+                <svg class="i i-xl" aria-hidden="true"><use href="#tutor"></use></svg>
+              </div>
+              <div class="preview-boxes"><div></div><div></div><div></div></div>
+              <div class="preview-button">اكتشف الدورات</div>
+            </div>
+          </div>
+          <p class="section-intro preview-note">هذه معاينة شكلية داخل لوحة المدير، وليست تغييرات فعلية في الموقع المنشور.</p>
+          <button type="button" class="btn btn-soft btn-full" id="open-site">
+            <svg class="i i-sm" aria-hidden="true"><use href="#globe"></use></svg>
+            فتح الموقع العام
+          </button>
+        </aside>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="toast-stack" id="toast-root" aria-live="polite"></div>
+
+  <!--
+    الترتيب:
+    1) data.js (+ layout.js: القائمة والشريط العلوي)   البيانات
+    2) main.js   الدوال المساعدة (فيها bindToggles و applyBrandColor)
+    3) appearance.js كود هاي الصفحة
+  -->
+  <script src="js/data.js" defer></script>
+  <script src="js/layout.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/pages/appearance.js" defer></script>
+</body>
+</html>

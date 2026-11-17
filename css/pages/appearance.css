@@ -1,0 +1,121 @@
+/* =========================================================
+   appearance.css — صفحة مظهر الموقع فقط
+   1) مربعات الألوان
+   2) المعاينة الفورية (موقع مصغّر)
+   (المفاتيح والعمودين موجودين بـ components.css قسم 15)
+   ========================================================= */
+
+
+/* ---------- 1) مربعات الألوان: 4 بكل سطر ---------- */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 11px;
+}
+
+/* border أبيض + outline رمادي = إطار مزدوج */
+.swatch {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 66px;
+  border: 3px solid #fff;
+  border-radius: 13px;
+  outline: 1px solid var(--line);
+  transition: 0.16s;
+}
+
+.swatch:hover {
+  transform: translateY(-2px);
+}
+
+/* المختار: إطار أصفر عريض */
+.swatch.selected {
+  outline: 3px solid var(--sun);
+}
+
+.swatch .i {
+  color: #fff;
+}
+
+
+/* ---------- 2) المعاينة: موقع مصغّر بالـ CSS بس ---------- */
+.preview-ui {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: #f8fbfb;
+}
+
+/* شريط علوي مصغّر */
+.preview-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 43px;
+  padding: 10px;
+  background: #073747;
+  color: #fff;
+  font-size: 10px;
+}
+
+/* margin-inline-start: auto بيدفع الروابط لآخر الشريط */
+.preview-header span {
+  margin-inline-start: auto;
+}
+
+.preview-body {
+  padding: 19px;
+}
+
+/* البانر: بيستعمل var(--brand)، فبيتغيّر لونه مع اختيار اللون */
+.preview-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 90px;
+  padding: 13px;
+  border-radius: 11px;
+  background: linear-gradient(130deg, var(--brand), #064b5d);
+  color: #fff;
+}
+
+.preview-hero strong {
+  font-size: 13px;
+}
+
+/* 3 مربعات فاضية بتمثّل كروت */
+.preview-boxes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.preview-boxes > div {
+  height: 50px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.preview-button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 7px;
+  background: var(--sun);
+  color: #063b4c;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.preview-note {
+  margin-top: 14px;
+}
+
+/* الوضع الداكن للمربعات الصغيرة */
+.dark-mode .preview-boxes > div {
+  background: #19303b;
+}

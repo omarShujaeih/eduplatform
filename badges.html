@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--
+  badges.html — الشارات (قسم المستخدمين)
+  صفحة قائمة (جدول) مبنية من الإعدادات.
+  المحتوى كله (الأعمدة، البيانات، الحقول) موجود بـ: js/config/users.js  ←  PAGES['badges']
+  بدك تعدّل الصفحة؟ عدّل إعداداتها هناك، مش هون.
+-->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#06677d" />
+  <title>الشارات · Micro Learn Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/theme-dark.css" />
+
+  <!-- الوضع الداكن قبل ما تنرسم الصفحة (عشان ما تومض أبيض) -->
+  <script>
+    try {
+      if (localStorage.getItem('eduplatform-theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch {}
+  </script>
+</head>
+<!-- data-page: page-builder.js بيقرأه عشان يعرف أي إعدادات يبني -->
+<body data-page="badges">
+
+  <script src="js/icons.js"></script>
+
+  <!-- القائمة الجانبية والشريط العلوي: layout.js -->
+  <div class="main">
+    <!-- المحتوى: page-builder.js بيبنيه هون -->
+    <main class="content" id="page-root"></main>
+  </div>
+
+  <div class="toast-stack" id="toast-root" aria-live="polite"></div>
+
+  <!-- الترتيب: البيانات ← القائمة ← المساعدات ← محرّك القوائم ← الباني ← إعدادات القسم -->
+  <script src="js/data.js" defer></script>
+  <script src="js/layout.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/list-page.js" defer></script>
+  <script src="js/page-builder.js" defer></script>
+  <script src="js/config/users.js" defer></script>
+</body>
+</html>

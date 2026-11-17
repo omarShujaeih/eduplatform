@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<!-- lang="ar" = اللغة عربية، dir="rtl" = الاتجاه من اليمين لليسار -->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <!-- بيخلّي الصفحة تتجاوب مع عرض شاشة الموبايل -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- لون شريط المتصفح على الموبايل -->
+  <meta name="theme-color" content="#06677d" />
+  <title>لوحة التحكم · Micro Learn Admin</title>
+
+  <!-- خط Cairo من Google Fonts (preconnect بيسرّع التحميل) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!--
+    ملفات CSS خارجية، والترتيب مهم:
+    1) base.css        المتغيرات والـ reset (لكل الصفحات)
+    2) components.css  الأزرار والكروت والجداول (لكل الصفحات)
+    3) layout.css      القائمة الجانبية والشريط العلوي (لصفحات اللوحة)
+    4) dashboard.css   تنسيقات هاي الصفحة بس
+    5) theme-dark.css  الوضع الداكن (لازم آخر واحد عشان يغطّي على الكل)
+  -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/pages/dashboard.css" />
+  <link rel="stylesheet" href="css/theme-dark.css" />
+
+  <!-- بيطبّق الوضع الداكن قبل ما تنرسم الصفحة، عشان ما تومض أبيض.
+       لازم يكون بالـ <head> ومش defer، فبيشتغل فوراً -->
+  <script>
+    try {
+      if (localStorage.getItem('eduplatform-theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch {}
+  </script>
+</head>
+<body>
+
+  <!-- الأيقونات: لازم أول شي بالـ body وبدون defer، عشان تكون جاهزة قبل المحتوى -->
+  <script src="js/icons.js"></script>
+
+  <!-- القائمة الجانبية والشريط العلوي: js/layout.js بيبنيهم ويضيفهم هون -->
+  <div class="main">
+
+    <!-- ===== محتوى الصفحة ===== -->
+    <main class="content">
+      <!-- ---------- العنوان + الأزرار ---------- -->
+      <div class="page-title-row">
+        <div>
+          <div class="breadcrumb">
+            <span>الرئيسية</span>
+            <svg class="i i-sm" aria-hidden="true"><use href="#chevron"></use></svg>
+            <span class="active">لوحة التحكم</span>
+          </div>
+          <h1 class="page-title">لوحة التحكم</h1>
+          <p class="page-sub">أهلاً بعودتك! هذه نظرة مركزة على نشاط المنصة.</p>
+        </div>
+
+        <div class="actions">
+          <!-- ?new=1 = صفحة الدورات بتفتح نافذة الإضافة لحالها -->
+          <a class="btn btn-primary" href="courses.html?new=1">
+            <svg class="i i-sm" aria-hidden="true"><use href="#plus"></use></svg>
+            إضافة دورة
+          </a>
+          <button type="button" class="btn btn-outline" id="export-summary">
+            <svg class="i i-sm" aria-hidden="true"><use href="#download"></use></svg>
+            تصدير ملخص
+          </button>
+        </div>
+      </div>
+
+
+      <!-- ---------- 1) البانر الترحيبي + أزرار الوصول السريع (من اللوحة الحقيقية) ---------- -->
+      <section class="hero-panel">
+        <div class="hero-copy">
+          <span class="eyebrow">مرحباً، Admin 👋</span>
+          <h2>كل ما تحتاجه لإدارة <em>تجربة تعليمية مميزة</em></h2>
+          <p>كل شيء تحت سيطرتك، استخدم أزرار الوصول السريع لإدارة الإجراءات ذات الصلة بسهولة.</p>
+          <div class="actions">
+            <a class="btn btn-sun" href="courses.html">
+              <svg class="i i-sm" aria-hidden="true"><use href="#book"></use></svg>
+              إدارة الدورات
+            </a>
+            <a class="btn btn-outline hero-outline" href="quizzes.html">
+              <svg class="i i-sm" aria-hidden="true"><use href="#quiz"></use></svg>
+              عرض الاختبارات
+            </a>
+          </div>
+          <!-- أزرار صغيرة: نفس اللي باللوحة الحقيقية -->
+          <div class="hero-quick">
+            <a class="btn" href="course-comments.html">
+              <svg class="i i-sm" aria-hidden="true"><use href="#message"></use></svg>
+              التعليقات
+            </a>
+            <a class="btn" href="supports.html">
+              <svg class="i i-sm" aria-hidden="true"><use href="#mail"></use></svg>
+              التذاكر
+            </a>
+            <a class="btn" href="course-reports.html">
+              <svg class="i i-sm" aria-hidden="true"><use href="#help"></use></svg>
+              البلاغات
+            </a>
+            <button type="button" class="btn" id="clear-cache">
+              <svg class="i i-sm" aria-hidden="true"><use href="#refresh"></use></svg>
+              مسح ذاكرة التخزين المؤقت
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="outer">
+            <div class="inner">
+              <svg class="i"><use href="#tutor"></use></svg>
+            </div>
+          </div>
+          <span class="float-badge">
+            <svg class="i i-sm"><use href="#check"></use></svg>
+            مساحة عمل منظمة
+          </span>
+        </div>
+      </section>
+
+      <div class="notice-banner">
+        <svg class="i i-sm" aria-hidden="true"><use href="#help"></use></svg>
+        <span>نسخة تجريبية ببيانات نموذجية بنفس أقسام لوحة التحكم الحقيقية. الأرقام غير متصلة بقاعدة بيانات.</span>
+      </div>
+
+
+      <!-- ---------- 2) كروت الملخص الثلاثة: dashboard.js بيبنيها من البيانات ---------- -->
+      <div class="grid3" id="summary-cards"></div>
+
+
+      <!-- ---------- 3) الكروت الأربعة (data-stat بيتعبّى من dashboard.js) ---------- -->
+      <div class="grid4">
+        <div class="paper stat-card">
+          <div class="stat-copy">
+            <small>مبيعة جديدة</small>
+            <div class="stat-value" data-stat="newSales">0</div>
+            <div class="stat-foot">منذ آخر زيارة</div>
+          </div>
+          <div class="stat-icon">
+            <svg class="i i-lg" aria-hidden="true"><use href="#wallet"></use></svg>
+          </div>
+        </div>
+        <div class="paper stat-card">
+          <div class="stat-copy">
+            <small>تعليق جديد</small>
+            <div class="stat-value" data-stat="newComments">0</div>
+            <div class="stat-foot">بانتظار المراجعة</div>
+          </div>
+          <div class="stat-icon purple">
+            <svg class="i i-lg" aria-hidden="true"><use href="#message"></use></svg>
+          </div>
+        </div>
+        <div class="paper stat-card">
+          <div class="stat-copy">
+            <small>تذكرة دعم جديدة</small>
+            <div class="stat-value" data-stat="newTickets">0</div>
+            <div class="stat-foot">بحاجة لرد</div>
+          </div>
+          <div class="stat-icon gold">
+            <svg class="i i-lg" aria-hidden="true"><use href="#mail"></use></svg>
+          </div>
+        </div>
+        <div class="paper stat-card">
+          <div class="stat-copy">
+            <small>فصول في انتظار المراجعة</small>
+            <div class="stat-value" data-stat="pendingClasses">0</div>
+            <div class="stat-foot">قبل النشر</div>
+          </div>
+          <div class="stat-icon pink">
+            <svg class="i i-lg" aria-hidden="true"><use href="#eye"></use></svg>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ---------- 4) صف: إحصائيات المبيعات | آخر التعليقات ---------- -->
+      <div class="dashboard-columns">
+        <section class="paper panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">إحصائيات المبيعات</h2>
+              <span class="panel-note">نموذج رسم بياني توضيحي</span>
+            </div>
+            <div class="segmented" id="range-switch">
+              <button type="button" data-range="week">أسبوع</button>
+              <button type="button" data-range="month">الشهر</button>
+              <button type="button" data-range="year" class="selected">السنة</button>
+            </div>
+          </div>
+          <div class="chart-area" id="sales-chart"></div>
+          <!-- مبيعات اليوم / الأسبوع / الشهر / السنة -->
+          <div class="earnings" id="sales-boxes"></div>
+        </section>
+
+        <section class="paper panel" id="latest-comments">
+          <div class="panel-head">
+            <h2 class="panel-title">آخر التعليقات</h2>
+            <a class="text-link" href="course-comments.html">
+              عرض الكل
+              <svg class="i i-sm" aria-hidden="true"><use href="#arrow"></use></svg>
+            </a>
+          </div>
+          <div class="feed" id="comments-feed"></div>
+        </section>
+      </div>
+
+
+      <!-- ---------- 5) صف 3 قوائم: التذاكر | الفصول المباشرة | الفصول الأخيرة ---------- -->
+      <div class="grid3 lists-row">
+        <section class="paper panel" id="latest-tickets">
+          <div class="panel-head">
+            <h2 class="panel-title">آخر تذاكر الدعم</h2>
+            <span class="pill yellow"><span data-stat="awaitingTickets">0</span>&nbsp;ردود معلقة</span>
+          </div>
+          <div class="feed" id="tickets-feed"></div>
+          <a class="text-link" href="supports.html">عرض الكل <svg class="i i-sm" aria-hidden="true"><use href="#arrow"></use></svg></a>
+        </section>
+
+        <section class="paper panel">
+          <div class="panel-head">
+            <h2 class="panel-title">آخر الفصول المباشرة</h2>
+            <span class="pill gray"><span data-stat="pendingClasses">0</span>&nbsp;في انتظار المراجعة</span>
+          </div>
+          <div class="feed" id="live-feed"></div>
+          <a class="text-link" href="live-classes.html">عرض الكل <svg class="i i-sm" aria-hidden="true"><use href="#arrow"></use></svg></a>
+        </section>
+
+        <section class="paper panel">
+          <div class="panel-head">
+            <h2 class="panel-title">الفصول الأخيرة</h2>
+            <span class="pill gray"><span data-stat="drafts">0</span>&nbsp;مسودات</span>
+          </div>
+          <div class="feed" id="classes-feed"></div>
+          <a class="text-link" href="courses.html">عرض الكل <svg class="i i-sm" aria-hidden="true"><use href="#arrow"></use></svg></a>
+        </section>
+      </div>
+
+
+      <!-- ---------- 6) إحصائيات تسجيل المستخدمين (بعرض الصفحة) ---------- -->
+      <section class="paper panel full-panel">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">إحصائيات تسجيل المستخدمين</h2>
+            <span class="panel-note">عدد المسجلين الجدد بكل يوم من هذا الشهر</span>
+          </div>
+          <span class="pill"><span data-stat="registrations">0</span>&nbsp;مستخدم هذا الشهر</span>
+        </div>
+        <div class="chart-area" id="users-chart"></div>
+      </section>
+
+
+      <!-- ---------- 7) صف: أحدث الدورات (جدول) | توزيع المحتوى ---------- -->
+      <div class="dash-secondary">
+        <section class="paper panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">أحدث الدورات</h2>
+              <span class="panel-note">إدارة سريعة للدورات الموجودة</span>
+            </div>
+            <a class="text-link" href="courses.html">
+              عرض الكل
+              <svg class="i i-sm" aria-hidden="true"><use href="#arrow"></use></svg>
+            </a>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">المدرّب</th>
+                  <th scope="col">الدورة</th>
+                  <th scope="col">الطلاب</th>
+                  <th scope="col">السعر</th>
+                  <th scope="col">الحالة</th>
+                </tr>
+              </thead>
+              <tbody id="recent-courses"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="paper panel">
+          <div class="panel-head">
+            <h2 class="panel-title">توزيع المحتوى</h2>
+            <svg class="i" aria-hidden="true"><use href="#dots"></use></svg>
+          </div>
+          <div class="donut-wrap">
+            <div class="donut">
+              <div class="donut-inner">
+                <strong data-stat="courses">0</strong>
+                <small>دورات</small>
+              </div>
+            </div>
+            <div class="donut-labels">
+              <div>
+                <span><i class="legend-marker" style="background: #0b7186"></i> منشور</span>
+                <b data-stat="published">0</b>
+              </div>
+              <div>
+                <span><i class="legend-marker" style="background: #ffcf24"></i> مسودات</span>
+                <b data-stat="drafts">0</b>
+              </div>
+              <div>
+                <span><i class="legend-marker" style="background: #a3d4d0"></i> اختبارات</span>
+                <b data-stat="quizzes">0</b>
+              </div>
+            </div>
+          </div>
+          <hr class="soft-divider" />
+          <p class="panel-note">تحكم في محتواك من صفحة واحدة مع خيارات واضحة للنشر والتحرير.</p>
+          <a class="text-link" href="courses.html">
+            عرض المحتوى
+            <svg class="i i-sm" aria-hidden="true"><use href="#arrow"></use></svg>
+          </a>
+        </section>
+      </div>
+
+
+      <!-- ---------- 8) الوصول السريع ---------- -->
+      <section class="paper panel quick-panel">
+        <div class="panel-head">
+          <div>
+            <h2 class="panel-title">الوصول السريع</h2>
+            <span class="panel-note">خطواتك اليومية الأكثر استخداماً</span>
+          </div>
+        </div>
+        <div class="quick-tools">
+          <a class="quick-tool" href="courses.html?new=1">
+            <svg class="i" aria-hidden="true"><use href="#plus"></use></svg>
+            إضافة دورة
+          </a>
+          <a class="quick-tool" href="quizzes.html?new=1">
+            <svg class="i" aria-hidden="true"><use href="#quiz"></use></svg>
+            إنشاء اختبار
+          </a>
+          <a class="quick-tool" href="students.html">
+            <svg class="i" aria-hidden="true"><use href="#users"></use></svg>
+            إدارة الطلاب
+          </a>
+          <a class="quick-tool" href="supports.html">
+            <svg class="i" aria-hidden="true"><use href="#mail"></use></svg>
+            تذاكر الدعم
+          </a>
+          <a class="quick-tool" href="appearance.html">
+            <svg class="i" aria-hidden="true"><use href="#palette"></use></svg>
+            مظهر الموقع
+          </a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- مكان الإشعارات السفلية (Toast). aria-live بيخلّي قارئ الشاشة يقرأها -->
+  <div class="toast-stack" id="toast-root" aria-live="polite"></div>
+
+  <!--
+    ملفات JavaScript، والترتيب مهم:
+    1) data.js (+ layout.js: القائمة والشريط العلوي)        البيانات (لازم أول شي)
+    2) main.js        كود مشترك لكل صفحات اللوحة
+    3) charts.js      دوال الرسم البياني (مشتركة مع صفحة التسويق)
+    4) dashboard.js   كود هاي الصفحة بس
+    defer = الملف بيشتغل بعد ما الـ HTML يخلص تحميل، وبيحافظ على الترتيب
+  -->
+  <script src="js/data.js" defer></script>
+  <script src="js/layout.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/charts.js" defer></script>
+  <script src="js/pages/dashboard.js" defer></script>
+</body>
+</html>

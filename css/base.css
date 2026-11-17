@@ -1,0 +1,150 @@
+/* =========================================================
+   base.css — الأساس المشترك لكل صفحات المنصة
+   1) المتغيرات (الألوان، الظلال، الزوايا)
+   2) Reset بسيط
+   3) الأيقونات والأدوات المساعدة (utilities)
+   ========================================================= */
+
+/* ---------- 1) المتغيرات (Design Tokens) ----------
+   أي لون أو قيمة بتتكرر بنعرّفها هون مرة وحدة،
+   وبنستخدمها في باقي الملفات عن طريق var(--name) */
+:root {
+  /* ألوان الهوية */
+  --brand: #0b7186;        /* التركواز الأساسي */
+  --brand-dark: #064b5d;
+  --brand-deep: #073747;   /* الكحلي الغامق (السايدبار والعناوين) */
+  --sun: #ffcf24;          /* الأصفر */
+  --mint: #dff4f1;
+  --mint-strong: #a3d4d0;
+
+  /* الخلفيات والنصوص */
+  --page: #f3f7f8;         /* خلفية الصفحة */
+  --paper: #ffffff;        /* خلفية الكروت */
+  --text: #153342;
+  --muted: #7e929c;        /* نص ثانوي باهت */
+  --line: #e5eef0;         /* لون الحدود والفواصل */
+
+  /* ألوان الحالات */
+  --success: #189977;
+  --warning: #d9911d;
+  --danger: #d55061;
+
+  /* الشكل */
+  --radius: 20px;
+  --soft-shadow: 0 10px 38px rgba(16, 67, 78, 0.04);
+  --shadow: 0 10px 40px rgba(12, 58, 67, 0.07);
+
+  /* عرض القائمة الجانبية (رح نستخدمه بصفحات الداشبورد) */
+  --side-width: 258px;
+
+  --font: 'Cairo', 'Tahoma', sans-serif;
+}
+
+/* ---------- 2) Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* العرض بيشمل الـ padding والـ border */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* الأزرار والحقول ما بتورث الخط تلقائياً، فبنجبرها */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+input,
+select,
+textarea {
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+img,
+svg {
+  vertical-align: middle;
+}
+
+small {
+  color: var(--muted);
+}
+
+/* الخاصية hidden بالـ HTML قيمتها display: none، بس أي class
+   فيها display (زي .btn { display: inline-flex }) بتغلبها.
+   هاي القاعدة بتضمن إن hidden دايماً بتخبّي العنصر */
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- 3) الأيقونات ----------
+   كل الأيقونات SVG بخطوط (stroke)، ولونها بياخد لون النص currentColor */
+.i {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.i-sm { width: 15px; height: 15px; }
+.i-lg { width: 22px; height: 22px; }
+.i-xl { width: 28px; height: 28px; }
+
+/* ---------- أدوات مساعدة ---------- */
+.muted { color: var(--muted); }
+.color-brand { color: var(--brand); }
+
+/* نص إنجليزي/أرقام داخل صفحة عربية */
+.ltr {
+  direction: ltr;
+  unicode-bidi: embed;
+  display: inline-block;
+}
+
+/* نص مخفي عن العين بس قارئ الشاشة بيقرأه */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}

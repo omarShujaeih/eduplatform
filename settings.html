@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<!--
+  settings.html — صفحة الإعدادات العامة
+  هيكل المحتوى:
+  .page-title-row   العنوان + زر الحفظ
+  .settings-main    عمودين:
+    ├── .stack      كرتين: معلومات المنصة (نموذج) + خيارات الإدارة (مفاتيح)
+    └── <aside>     ملاحظة + زر استعادة البيانات الأصلية
+  ما في CSS خاص: كل شي من components.css (قسم 15)
+-->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#06677d" />
+  <title>الإعدادات العامة · Micro Learn Admin</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- الملفات المشتركة بس: ما في ملف CSS خاص بهاي الصفحة -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/theme-dark.css" />
+
+  <!-- بيطبّق الوضع الداكن قبل ما تنرسم الصفحة، عشان ما تومض أبيض.
+       لازم يكون بالـ <head> ومش defer، فبيشتغل فوراً -->
+  <script>
+    try {
+      if (localStorage.getItem('eduplatform-theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch {}
+  </script>
+</head>
+<body>
+
+  <!-- الأيقونات: لازم أول شي بالـ body وبدون defer، عشان تكون جاهزة قبل المحتوى -->
+  <script src="js/icons.js"></script>
+
+  <!-- القائمة الجانبية والشريط العلوي: js/layout.js بيبنيهم ويضيفهم هون -->
+  <div class="main">
+
+    <!-- ===== محتوى الصفحة ===== -->
+    <main class="content">
+
+      <!-- ---------- العنوان + الأزرار ---------- -->
+      <div class="page-title-row">
+        <div>
+          <div class="breadcrumb">
+            <span>الرئيسية</span>
+            <svg class="i i-sm" aria-hidden="true"><use href="#chevron"></use></svg>
+            <span class="active">الإعدادات العامة</span>
+          </div>
+          <h1 class="page-title">الإعدادات العامة</h1>
+          <p class="page-sub">حافظ على إعدادات المنصة الأساسية في مكان منظم.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="save-settings">
+            <svg class="i i-sm" aria-hidden="true"><use href="#check"></use></svg>
+            حفظ الإعدادات
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-main">
+        <div class="stack">
+
+          <!-- ---------- معلومات المنصة: نموذج بعمودين (.form-row) ---------- -->
+          <section class="paper panel">
+            <div class="panel-head">
+              <h2 class="panel-title">معلومات المنصة</h2>
+            </div>
+            <div class="form-row">
+              <label class="form-field">
+                اسم المنصة
+                <input class="form-control" id="site-name" />
+              </label>
+              <label class="form-field">
+                بريد الدعم
+                <!-- type="email" + required: settings.js بيفحصهم قبل الحفظ -->
+                <input class="form-control" id="support-email" type="email" required />
+              </label>
+              <label class="form-field">
+                اللغة الأساسية
+                <select class="form-control" id="site-lang">
+                  <option value="ar">العربية (RTL)</option>
+                  <option value="en">English</option>
+                </select>
+              </label>
+              <label class="form-field">
+                المنطقة الزمنية
+                <!-- disabled = للقراءة فقط -->
+                <input class="form-control" value="Asia/Hebron" disabled />
+              </label>
+            </div>
+          </section>
+
+          <!-- ---------- خيارات الإدارة (data-key = اسم الخاصية بـ db.settings) ---------- -->
+          <section class="paper panel">
+            <div class="panel-head">
+              <h2 class="panel-title">خيارات الإدارة</h2>
+            </div>
+            <div>
+          <div class="settings-row">
+            <div>
+              <strong>إشعارات المدير</strong>
+              <p>تلقي إشعارات التنبيهات الجديدة</p>
+            </div>
+            <!-- role="switch" = قارئ الشاشة بيعرف إنه مفتاح تشغيل/إيقاف -->
+            <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="إشعارات المدير" data-key="notifications"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <strong>وضع الصيانة</strong>
+              <p>إخفاء الواجهة العامة في النسخة الحية بعد تفعيل الربط</p>
+            </div>
+            <!-- role="switch" = قارئ الشاشة بيعرف إنه مفتاح تشغيل/إيقاف -->
+            <button type="button" class="toggle" role="switch" aria-checked="false" aria-label="وضع الصيانة" data-key="maintenance"></button>
+          </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- ---------- العمود الجانبي ---------- -->
+        <aside class="paper panel">
+          <div class="panel-head">
+            <h2 class="panel-title">مهم قبل النشر</h2>
+          </div>
+          <div class="notice-inline">
+            <svg class="i" aria-hidden="true"><use href="#lock"></use></svg>
+            <span>هذه الحقول تجريبية فقط. حفظها يغيّر بيانات المتصفح ولا يعدّل إعدادات أي خادم.</span>
+          </div>
+          <hr class="soft-divider" />
+          <h3 class="panel-title">تجربة العرض</h3>
+          <p class="section-intro">يمكنك استعادة البيانات الأولية في أي وقت.</p>
+          <button type="button" class="btn btn-outline btn-full" id="reset-data">
+            <svg class="i i-sm" aria-hidden="true"><use href="#refresh"></use></svg>
+            إعادة ضبط البيانات
+          </button>
+        </aside>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="toast-stack" id="toast-root" aria-live="polite"></div>
+
+  <!--
+    الترتيب:
+    1) data.js (+ layout.js: القائمة والشريط العلوي)   البيانات
+    2) main.js   الدوال المساعدة (فيها bindToggles و applyBrandColor)
+    3) settings.js كود هاي الصفحة
+  -->
+  <script src="js/data.js" defer></script>
+  <script src="js/layout.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/pages/settings.js" defer></script>
+</body>
+</html>

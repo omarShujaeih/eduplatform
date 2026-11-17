@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--
+  marketing.html — لوحة تحكم التسويق
+  (مبنية على هيكل صفحة itutor24.com/admin/marketing الحقيقية، بتصميمنا الجديد)
+  هيكل المحتوى:
+  .page-title-row     العنوان + زر تصدير
+  .grid4              4 كروت أرقام
+  .dashboard-columns  رسم صافي الربح + صناديق الأرباح | دائرة أنواع الفصول
+  .tables-row ×2      4 جداول "الأكثر مبيعاً" (عمودين بكل صف)
+  .full-row           جدول الطلاب الأكثر نشاطاً
+-->
+<!-- lang="ar" = اللغة عربية، dir="rtl" = الاتجاه من اليمين لليسار -->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <!-- بيخلّي الصفحة تتجاوب مع عرض شاشة الموبايل -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- لون شريط المتصفح على الموبايل -->
+  <meta name="theme-color" content="#06677d" />
+  <title>لوحة التسويق · Micro Learn Admin</title>
+
+  <!-- خط Cairo من Google Fonts (preconnect بيسرّع التحميل) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!--
+    ملفات CSS خارجية، والترتيب مهم:
+    1) base.css        المتغيرات والـ reset (لكل الصفحات)
+    2) components.css  الأزرار والكروت والجداول (لكل الصفحات)
+    3) layout.css      القائمة الجانبية والشريط العلوي (لصفحات اللوحة)
+    4) dashboard.css   كروت الأرقام والرسم والدائرة (بنعيد استعمالهم من الداشبورد)
+    5) marketing.css   الأشياء الجديدة بهاي الصفحة بس
+    6) theme-dark.css  الوضع الداكن (لازم آخر واحد عشان يغطّي على الكل)
+  -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/pages/dashboard.css" />
+  <link rel="stylesheet" href="css/pages/marketing.css" />
+  <link rel="stylesheet" href="css/theme-dark.css" />
+
+  <!-- بيطبّق الوضع الداكن قبل ما تنرسم الصفحة، عشان ما تومض أبيض.
+       لازم يكون بالـ <head> ومش defer، فبيشتغل فوراً -->
+  <script>
+    try {
+      if (localStorage.getItem('eduplatform-theme') === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+      }
+    } catch {}
+  </script>
+</head>
+<body>
+
+  <!-- الأيقونات: لازم أول شي بالـ body وبدون defer، عشان تكون جاهزة قبل المحتوى -->
+  <script src="js/icons.js"></script>
+
+  <!-- القائمة الجانبية والشريط العلوي: js/layout.js بيبنيهم ويضيفهم هون -->
+  <div class="main">
+
+    <!-- ===== محتوى الصفحة ===== -->
+    <main class="content">
+
+      <!-- ---------- العنوان + الأزرار ---------- -->
+      <div class="page-title-row">
+        <div>
+          <div class="breadcrumb">
+            <span>الرئيسية</span>
+            <svg class="i i-sm" aria-hidden="true"><use href="#chevron"></use></svg>
+            <span class="active">لوحة التسويق</span>
+          </div>
+          <h1 class="page-title">لوحة تحكم التسويق</h1>
+          <p class="page-sub">تابع الأرباح والمبيعات، واعرف مين الأكثر مبيعاً ونشاطاً.</p>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn-outline" id="export-marketing">
+            <svg class="i i-sm" aria-hidden="true"><use href="#download"></use></svg>
+            تصدير
+          </button>
+        </div>
+      </div>
+
+      <div class="notice-banner">
+        <svg class="i i-sm" aria-hidden="true"><use href="#help"></use></svg>
+        <span>أرقام نموذجية بنفس هيكل لوحة التسويق الحقيقية، وغير متصلة بأي بيانات حقيقية.</span>
+      </div>
+
+
+      <!-- ---------- 1) الكروت الأربعة (نفس .stat-card تبع الداشبورد)
+           data-card: marketing.js بيحط الرقم من البيانات ---------- -->
+      <div class="grid4">
+        <div class="paper stat-card">
+          <div class="stat-copy">
+            <small>الطلاب بدون عملية شراء</small>
+            <div class="stat-value" data-card="studentsWithoutPurchase">0</div>
+            <div class="stat-foot">فرصة لحملة تسويقية</div>
+          </div>
+          <div class="stat-icon ">
+            <svg class="i i-lg" aria-hidden="true"><use href="#users"></use></svg>
+          </div>
+        </div>
+        <div class="paper stat-card">
+          <div class="stat-copy">
+            <small>المعلمون بدون فصول</small>
+            <div class="stat-value" data-card="tutorsWithoutClasses">0</div>
+            <div class="stat-foot">بحاجة لمتابعة</div>
+          </div>
+          <div class="stat-icon purple">
+            <svg class="i i-lg" aria-hidden="true"><use href="#tutor"></use></svg>
+          </div>
+        </div>
+        <div class="paper stat-card">
+          <div class="stat-copy">
+            <small>الفصول الرائجة</small>
+            <div class="stat-value" data-card="trendingClasses">0</div>
+            <div class="stat-foot">معروضة كمميزة</div>
+          </div>
+          <div class="stat-icon gold">
+            <svg class="i i-lg" aria-hidden="true"><use href="#trend"></use></svg>
+          </div>
+        </div>
+        <div class="paper stat-card">
+          <div class="stat-copy">
+            <small>الخصومات النشطة</small>
+            <div class="stat-value" data-card="activeDiscounts">0</div>
+            <div class="stat-foot">أكواد خصم فعّالة</div>
+          </div>
+          <div class="stat-icon pink">
+            <svg class="i i-lg" aria-hidden="true"><use href="#tag"></use></svg>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ---------- 2) صف: رسم صافي الربح (عريض) + أنواع الفصول ---------- -->
+      <div class="dashboard-columns">
+
+        <section class="paper panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">إحصائيات صافي الربح بدون ضريبة</h2>
+              <span class="panel-note">بيانات نموذجية</span>
+            </div>
+            <div class="segmented" id="profit-range">
+              <button type="button" data-range="month">الشهر</button>
+              <button type="button" data-range="year" class="selected">السنة</button>
+            </div>
+          </div>
+
+          <!-- marketing.js بيرسم الـ SVG هون -->
+          <div class="chart-area" id="profit-chart"></div>
+
+          <!-- 4 صناديق: أرباح اليوم / الأسبوع / الشهر / السنة -->
+          <div class="earnings" id="earnings"></div>
+        </section>
+
+        <section class="paper panel">
+          <div class="panel-head">
+            <h2 class="panel-title">أنواع الفصول</h2>
+          </div>
+          <div class="donut-wrap">
+            <!-- لون الدائرة (conic-gradient) بينحسب بالـ JS من الأرقام -->
+            <div class="donut" id="types-donut">
+              <div class="donut-inner">
+                <strong id="types-total">0</strong>
+                <small>فصل</small>
+              </div>
+            </div>
+            <div class="donut-labels" id="types-legend"></div>
+          </div>
+          <hr class="soft-divider" />
+          <p class="panel-note">نسبة كل نوع من مجموع الفصول المنشورة.</p>
+          <a class="text-link" href="courses.html">
+            عرض الفصول
+            <svg class="i i-sm" aria-hidden="true"><use href="#arrow"></use></svg>
+          </a>
+        </section>
+      </div>
+
+
+      <!-- ---------- 3) صف جداول: الفصول + الجلسات ---------- -->
+      <div class="tables-row">
+        <section class="paper panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">الفصول الأكثر مبيعاً</h2>
+              <span class="panel-note">حسب عدد المبيعات</span>
+            </div>
+            <!-- data-more: marketing.js بيربطه. aria-expanded بيحكي لقارئ الشاشة إذا الجدول مفتوح -->
+            <button type="button" class="btn btn-soft btn-sm" data-more aria-expanded="false">
+              <svg class="i i-sm" aria-hidden="true"><use href="#down"></use></svg>
+              إظهار المزيد</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr><th scope="col">#</th><th scope="col">الاسم</th><th scope="col">مبيعات</th><th scope="col">الدخل</th></tr></thead>
+              <tbody id="top-classes"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="paper panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">الجلسات الأكثر مبيعاً</h2>
+              <span class="panel-note">حسب المستشار</span>
+            </div>
+            <!-- data-more: marketing.js بيربطه. aria-expanded بيحكي لقارئ الشاشة إذا الجدول مفتوح -->
+            <button type="button" class="btn btn-soft btn-sm" data-more aria-expanded="false">
+              <svg class="i i-sm" aria-hidden="true"><use href="#down"></use></svg>
+              إظهار المزيد</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr><th scope="col">#</th><th scope="col">مستشار</th><th scope="col">مبيعات</th><th scope="col">الدخل</th></tr></thead>
+              <tbody id="top-sessions"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ---------- 4) صف جداول: المعلمون + البوابات ---------- -->
+      <div class="tables-row">
+        <section class="paper panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">المعلمون الأكثر مبيعاً</h2>
+              <span class="panel-note">مع مدة الفصول</span>
+            </div>
+            <!-- data-more: marketing.js بيربطه. aria-expanded بيحكي لقارئ الشاشة إذا الجدول مفتوح -->
+            <button type="button" class="btn btn-soft btn-sm" data-more aria-expanded="false">
+              <svg class="i i-sm" aria-hidden="true"><use href="#down"></use></svg>
+              إظهار المزيد</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr><th scope="col">ID</th><th scope="col">الاسم</th><th scope="col">مدة الفصل</th><th scope="col">مبيعات</th><th scope="col">الدخل</th></tr></thead>
+              <tbody id="top-tutors"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="paper panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">البوابات الأكثر مبيعاً</h2>
+              <span class="panel-note">الأكاديميات والمراكز</span>
+            </div>
+            <!-- data-more: marketing.js بيربطه. aria-expanded بيحكي لقارئ الشاشة إذا الجدول مفتوح -->
+            <button type="button" class="btn btn-soft btn-sm" data-more aria-expanded="false">
+              <svg class="i i-sm" aria-hidden="true"><use href="#down"></use></svg>
+              إظهار المزيد</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr><th scope="col">ID</th><th scope="col">الاسم</th><th scope="col">مدة الفصل</th><th scope="col">مبيعات</th><th scope="col">الدخل</th></tr></thead>
+              <tbody id="top-organizations"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <!-- ---------- 5) الطلاب الأكثر نشاطاً (بعرض الصفحة) ---------- -->
+      <div class="full-row">
+        <section class="paper panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="panel-title">الطلاب الأكثر نشاطاً</h2>
+              <span class="panel-note">حسب إجمالي الشراء</span>
+            </div>
+            <!-- data-more: marketing.js بيربطه. aria-expanded بيحكي لقارئ الشاشة إذا الجدول مفتوح -->
+            <button type="button" class="btn btn-soft btn-sm" data-more aria-expanded="false">
+              <svg class="i i-sm" aria-hidden="true"><use href="#down"></use></svg>
+              إظهار المزيد</button>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr><th scope="col">#</th><th scope="col">الاسم</th><th scope="col">الفصول التي تم شراؤها</th><th scope="col">الجلسات المحجوزة</th><th scope="col">إجمالي الشراء</th></tr></thead>
+              <tbody id="active-students"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- مكان الإشعارات السفلية (Toast). aria-live بيخلّي قارئ الشاشة يقرأها -->
+  <div class="toast-stack" id="toast-root" aria-live="polite"></div>
+
+  <!--
+    ملفات JavaScript، والترتيب مهم:
+    1) data.js (+ layout.js: القائمة والشريط العلوي)        البيانات (لازم أول شي)
+    2) main.js        كود مشترك لكل صفحات اللوحة
+    3) charts.js      دوال الرسم البياني (مشتركة مع صفحة التسويق)
+    4) marketing.js   كود هاي الصفحة بس
+    defer = الملف بيشتغل بعد ما الـ HTML يخلص تحميل، وبيحافظ على الترتيب
+  -->
+  <script src="js/data.js" defer></script>
+  <script src="js/layout.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/charts.js" defer></script>
+  <script src="js/pages/marketing.js" defer></script>
+</body>
+</html>

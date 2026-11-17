@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<!--
+  login.html — صفحة تسجيل الدخول
+  هيكل الصفحة:
+  .login-page (Grid عمودين)
+  ├── .login-form-side   ← يمين: الشعار + العنوان + النموذج + ملاحظة
+  └── .login-art         ← يسار: لوحة ملونة فيها شعار ونص و3 مربعات
+  هاي الصفحة ما فيها sidebar ولا topbar، فما بتحتاج layout.css
+-->
+<!-- lang="ar" = اللغة عربية، dir="rtl" = الاتجاه من اليمين لليسار -->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <!-- بيخلّي الصفحة تتجاوب مع عرض شاشة الموبايل -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- لون شريط المتصفح على الموبايل -->
+  <meta name="theme-color" content="#06677d" />
+  <title>تسجيل دخول الإدارة · Micro Learn Admin</title>
+
+  <!-- خط Cairo من Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- ملفات CSS خارجية: الأساس ← المكونات ← الصفحة (الترتيب مهم) -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages/login.css" />
+</head>
+<body>
+
+  <div class="login-page">
+
+    <!-- ===== الجهة اليمنى: نموذج الدخول ===== -->
+    <div class="login-form-side">
+
+      <!-- الشعار -->
+      <a class="login-top" href="login.html">
+        <img src="assets/images/brand-mark.svg" alt="Micro Learn" />
+        <div>
+          <strong>MICRO LEARN</strong>
+          <small>ADMIN WORKSPACE</small>
+        </div>
+      </a>
+
+      <div>
+        <span class="section-kicker">مرحباً بك في تجربة الإدارة الجديدة</span>
+        <h1>إدارة منصتك التعليمية<br />بسهولة ووضوح.</h1>
+        <p class="login-desc">واجهة تسجيل دخول عربية عصرية، صُممت لتكون متناسقة مع هوية المنصة الجديدة.</p>
+
+        <!-- النموذج: id="login-form" عشان الـ JS يلاقيه -->
+        <form id="login-form">
+          <!-- <label> بيغلّف الحقل: الضغط على النص بيفعّل الحقل
+               type="email" = المتصفح بيفحص إنه إيميل صحيح
+               autocomplete = بيساعد مدير كلمات السر يعبّي الحقل -->
+          <label class="form-field">
+            البريد الإلكتروني
+            <input class="form-control" type="email" placeholder="your@email.com" autocomplete="username" />
+          </label>
+
+          <label class="form-field">
+            كلمة المرور
+            <!-- .password-wrap = position: relative، فزر العين بيتموضع جوّا الحقل -->
+            <div class="password-wrap">
+              <input class="form-control" id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password" />
+              <button class="icon-btn flat" id="toggle-pass" type="button" aria-label="إظهار كلمة المرور">
+                <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
+            </div>
+          </label>
+
+          <div class="login-options">
+            <label><input type="checkbox" /> تذكرني</label>
+            <a href="#" class="color-brand">نسيت كلمة المرور؟</a>
+          </div>
+
+          <!-- type="submit" = الضغط عليه بيرسل النموذج (والـ JS بيلقط الإرسال)
+               3 classes: btn (الشكل) + btn-primary (اللون) + btn-full (العرض كامل) -->
+          <button class="btn btn-primary btn-full" type="submit">
+            استعراض لوحة التحكم التجريبية
+            <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 12h14m-6-6 6 6-6 6" />
+            </svg>
+          </button>
+        </form>
+
+        <div class="login-demo-note">
+          <svg class="i i-sm" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4M12 17h.01" />
+          </svg>
+          هذا النموذج للعرض فقط. لا يفحص البريد أو كلمة المرور، ولا يرسل أي بيانات إلى أي خادم.
+        </div>
+      </div>
+
+      <small class="login-copy">© 2026 Micro Learn — Admin UI Concept</small>
+    </div>
+
+    <!-- ===== الجهة اليسرى: اللوحة الملونة ===== -->
+    <div class="login-art">
+      <div class="login-art-content">
+
+        <div class="login-art-badge">
+          <!-- أيقونة قبعة التخرج -->
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 9l9-5 9 5-9 5-9-5zM7 12v5c3.3 2.8 6.7 2.8 10 0v-5M21 10v7" />
+          </svg>
+        </div>
+
+        <span class="section-kicker">مساحة عمل واحدة</span>
+        <h2>كل أدوات إدارة التعلم <span>في مكان واحد</span></h2>
+        <p>أنشئ دوراتك، راقب الاختبارات، وتابع طلابك عبر لوحة تحكم مبسطة ومتجاوبة.</p>
+
+        <!-- 3 مربعات شفافة جنب بعض (flex) -->
+        <div class="login-metrics">
+          <div><strong>01</strong><small>التحكم بالمحتوى</small></div>
+          <div><strong>02</strong><small>متابعة الطلاب</small></div>
+          <div><strong>03</strong><small>تحليل الأداء</small></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript خاص بهاي الصفحة -->
+  <script src="js/pages/login.js" defer></script>
+</body>
+</html>

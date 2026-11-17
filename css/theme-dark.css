@@ -1,0 +1,164 @@
+/* =========================================================
+   theme-dark.css — الوضع الداكن
+   لازم يكون آخر ملف CSS بالصفحة عشان يغطّي على اللي قبله.
+
+   كيف بيشتغل؟
+   زر 🌙 بيضيف class="dark-mode" على <html>.
+   1) أول جزء: بنغيّر قيم المتغيرات (--page, --paper ...)
+      فكل عنصر بيستعمل var() بيتغيّر لحاله تلقائياً.
+   2) باقي الملف: عناصر ألوانها مكتوبة مباشرة (مش متغيرات)
+      فلازم نغيّرها وحدة وحدة.
+   ========================================================= */
+
+
+/* ---------- 1) المتغيرات ---------- */
+.dark-mode {
+  --page: #10202a;
+  --paper: #19303b;
+  --text: #eaf4f5;
+  --muted: #9db5bf;
+  --line: #2a4751;
+  --brand-deep: #ecf6f7;   /* بيستعملوه العناوين، فبنفتّحه */
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.13);
+  color-scheme: dark;      /* بيخلّي المتصفح يرسم السكرول والحقول الأصلية غامقة */
+}
+
+.dark-mode body {
+  color: #dce8ec;
+}
+
+
+/* ---------- 2) الهيكل ---------- */
+.dark-mode .sidebar {
+  background: #071b26;     /* --brand-deep صار فاتح، فبنعطي القائمة لونها */
+  color: #d8e8e9;
+}
+
+.dark-mode .topbar {
+  background: #1a303b;
+}
+
+
+/* ---------- النصوص ---------- */
+.dark-mode .stat-value,
+.dark-mode .panel-title,
+.dark-mode .page-title,
+.dark-mode .cell-person strong,
+.dark-mode .cell-title,
+.dark-mode .preview-hero strong {
+  color: #e8f6f7;
+}
+
+.dark-mode .form-field {
+  color: #b9d0d6;
+}
+
+
+/* ---------- خلفيات غامقة بتدرج ---------- */
+.dark-mode .hero-panel,
+.dark-mode .btn-dark,
+.dark-mode .toast {
+  background: linear-gradient(120deg, #07566b, #073b4b);
+}
+
+/* الزر الأصفر: نصه كان --brand-deep (صار فاتح)، فبنرجعه غامق */
+.dark-mode .btn-sun {
+  color: #073747;
+}
+
+
+/* ---------- الحقول والأزرار ---------- */
+.dark-mode .btn-outline,
+.dark-mode .icon-btn,
+.dark-mode .field-with-icon,
+.dark-mode .filter-select,
+.dark-mode .form-control,
+.dark-mode .top-search,
+.dark-mode .page-btn {
+  background: #203944;
+  color: #d9edf1;
+}
+
+.dark-mode .top-search input,
+.dark-mode .field-with-icon input {
+  color: #e8f3f4;
+}
+
+.dark-mode .form-control:disabled {
+  background: #1c333d;
+  color: #7f9aa4;
+}
+
+/* الصفحة الحالية بالترقيم تضل ملونة */
+.dark-mode .page-btn.current {
+  background: var(--brand);
+  color: #fff;
+}
+
+
+/* ---------- الجداول ---------- */
+.dark-mode .data-table thead tr {
+  background: #203b46;
+}
+
+.dark-mode .data-table tbody tr:hover {
+  background: #1b3a43;
+}
+
+.dark-mode .data-table td {
+  border-bottom-color: #2a454f;
+}
+
+
+/* ---------- كروت ومربعات صغيرة ---------- */
+.dark-mode .donut-inner,
+.dark-mode .quick-tool,
+.dark-mode .insight-pill {
+  background: #19303b;
+  color: #d8e5ea;
+}
+
+.dark-mode .activity-icon,
+.dark-mode .activity-row {
+  border-color: #2a454f;
+}
+
+.dark-mode .preview-body {
+  background: #17333e;
+}
+
+
+/* ---------- الملاحظات والشارات ---------- */
+.dark-mode .notice-banner,
+.dark-mode .notice-inline {
+  border-color: #24525b;
+  background: #163d44;
+  color: #c7e5e7;
+}
+
+.dark-mode .preview-pill {
+  background: #433c25;
+  color: #ffe496;
+}
+
+.dark-mode .segmented {
+  background: #28414b;
+}
+
+.dark-mode .segmented button.selected {
+  background: #35505a;
+  color: #f2f9f9;
+}
+
+
+/* ---------- النوافذ ---------- */
+.dark-mode .modal {
+  background: #1a333e;
+  color: #e7f3f4;
+}
+
+.dark-mode .danger-note {
+  border-color: #603640;
+  background: #4c2932;
+  color: #fce4e7;
+}
